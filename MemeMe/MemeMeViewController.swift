@@ -12,10 +12,10 @@ class MemeMeViewController: UIViewController {
     
     // Tracks if bottom text field is selected
     var isBottomTextFieldActive : Bool = false
-    
+
     // Struct that tracks status of textField is were already touched
     var fieldFirstSelected = TextFieldFirstSelected()
-    var imageAspectRatio : CGFloat = 1.0
+    var imageAspectRatio = CGFloat()
     
     // MARK: - Outlets
     @IBOutlet weak var textFieldTop: UITextField!
@@ -27,6 +27,7 @@ class MemeMeViewController: UIViewController {
     @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var actionButton: UIBarButtonItem!
     
     @IBOutlet weak var memeContainerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var memeContainerViewBottomConstraint: NSLayoutConstraint!
@@ -46,13 +47,17 @@ class MemeMeViewController: UIViewController {
         // gesture recognizers for pinch and pan
         let panImageGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panHandler(_:)))
         panImageGestureRecognizer.maximumNumberOfTouches = 1
+        panImageGestureRecognizer.delegate = self
         memeImageView.addGestureRecognizer(panImageGestureRecognizer)
         
         let pinchImageGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchHandler(_:)))
+        pinchImageGestureRecognizer.delegate = self
         memeImageView.addGestureRecognizer(pinchImageGestureRecognizer)
         
-        // Initially disable cancel button
+        // Initially disable the following
         cancelButton.isEnabled = false
+        actionButton.isEnabled = false
+        memeImageView.isUserInteractionEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,7 +86,7 @@ class MemeMeViewController: UIViewController {
     
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(orientatioChanged(_:)), name: .UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged(_:)), name: .UIDeviceOrientationDidChange, object: nil)
     
     }
     
@@ -94,7 +99,7 @@ class MemeMeViewController: UIViewController {
     }
     
     // MARK: - Handle Orientation Change
-    @objc func orientatioChanged(_ notification:Notification)  {
+    @objc func orientationChanged(_ notification:Notification)  {
         
         if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) || UIDeviceOrientationIsPortrait(UIDevice.current.orientation) {
             let newFrame = imageViewRect(aspect: imageAspectRatio)
@@ -218,6 +223,8 @@ class MemeMeViewController: UIViewController {
         memeImageView.frame       = memeContainerView.bounds // reset imageView frame
         
         cancelButton.isEnabled    = false
+        actionButton.isEnabled    = false
+        memeImageView.isUserInteractionEnabled = false
     }
     
     // MARK: - Misc
@@ -237,7 +244,7 @@ class MemeMeViewController: UIViewController {
     // position image correctly if size is smaller than the container view
     func imageViewRect( aspect: CGFloat ) -> CGRect {
         
-        let imageNewHeight : CGFloat = memeContainerView.bounds.width/aspect
+        let imageNewHeight : CGFloat = memeContainerView.bounds.width/(aspect != 0 ? aspect : 1.0)
         let imageNewWidth  : CGFloat = memeContainerView.bounds.width
         
         return CGRect.init(x: memeContainerView.bounds.width/2 - imageNewWidth/2, y:  memeContainerView.bounds.height/2 - imageNewHeight/2, width: imageNewWidth, height: imageNewHeight)

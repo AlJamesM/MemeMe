@@ -28,6 +28,8 @@ extension MemeMeViewController: UIImagePickerControllerDelegate, UINavigationCon
             memeImageView.image = image
             
             cancelButton.isEnabled = true
+            actionButton.isEnabled = true
+            memeImageView.isUserInteractionEnabled = true
         
         }
         
