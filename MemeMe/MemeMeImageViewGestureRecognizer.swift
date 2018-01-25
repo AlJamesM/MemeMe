@@ -61,10 +61,12 @@ extension MemeMeViewController : UIGestureRecognizerDelegate {
                 
                 alignToContainer(imageView: pinchImageView, isPinch: true)
 
-                UIView.animate(withDuration: kAnimationTimeFast, animations: {
-                    pinchImageView.transform = pinchImageView.transform.scaledBy(x: kScaleBackFactor, y: kScaleBackFactor)
-                    pinchGesture.scale = 1.0 // Reset scale
-                })
+                if pinchImageView.frame.size.width >= (kScaleFactor * memeContainerView.frame.size.width) {
+                    UIView.animate(withDuration: kAnimationTimeFast, animations: {
+                        pinchImageView.transform = pinchImageView.transform.scaledBy(x: kScaleBackFactor, y: kScaleBackFactor)
+                        pinchGesture.scale = 1.0 // Reset scale
+                    })
+                }
                 
             case .changed, .began:
                 
