@@ -30,5 +30,17 @@ extension MemeMeViewController : UITextFieldDelegate {
         
         return true
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if let topText = textFieldTop.text, topText.isEmpty {
+            textFieldTop.text = kMemeTextDefaultTop
+            fieldFirstSelected.top = true
+        }
+        
+        if let bottomText = textFieldBottom.text, bottomText.isEmpty {
+            textFieldBottom.text = kMemeTextDefaultBottom
+            fieldFirstSelected.bottom = true
+        }
+    }
 }
-
