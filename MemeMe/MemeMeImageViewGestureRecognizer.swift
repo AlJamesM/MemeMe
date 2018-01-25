@@ -8,7 +8,11 @@
 
 import UIKit
 
-extension MemeMeViewController {
+extension MemeMeViewController : UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
     
     @objc func panHandler(_ panGesture: UIPanGestureRecognizer) {
 
@@ -18,7 +22,7 @@ extension MemeMeViewController {
         }
         
         if let panImageView = panGesture.view {
-
+            
             switch panGesture.state {
             case .began:
 
@@ -28,7 +32,7 @@ extension MemeMeViewController {
             case .ended:
 
                 alignToContainer(imageView: panImageView, isPinch: false)
-                
+
             case .changed:
 
                 let newXLocation = panGesture.translation(in: self.memeContainerView).x + Location.x
@@ -36,7 +40,7 @@ extension MemeMeViewController {
 
                 panImageView.frame.origin.x = newXLocation
                 panImageView.frame.origin.y = newYLocation
-
+                
             default:
 
                 print("no action here")
@@ -54,13 +58,23 @@ extension MemeMeViewController {
         
             switch pinchGesture.state {
             case .ended:
-
-                alignToContainer(imageView: pinchImageView, isPinch: true)
                 
-            case .changed:
+                alignToContainer(imageView: pinchImageView, isPinch: true)
 
-                pinchImageView.transform = (pinchImageView.transform.scaledBy(x: pinchGesture.scale, y: pinchGesture.scale))
-                pinchGesture.scale = 1.0
+                UIView.animate(withDuration: kAnimationTimeFast, animations: {
+                    pinchImageView.transform = pinchImageView.transform.scaledBy(x: kScaleBackFactor, y: kScaleBackFactor)
+                    pinchGesture.scale = 1.0 // Reset scale
+                })
+                
+            case .changed, .began:
+                
+                // Limits the image maximum size 
+                if pinchImageView.frame.size.width < (kScaleFactor * memeContainerView.frame.size.width) {
+                    
+                    pinchImageView.transform = pinchImageView.transform.scaledBy(x: pinchGesture.scale, y: pinchGesture.scale)
+                    pinchGesture.scale = 1.0 // Reset scale
+                
+                }
                 
             default:
 

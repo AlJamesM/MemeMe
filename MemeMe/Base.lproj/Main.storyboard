@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -112,6 +111,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="actionButton" destination="d8D-xM-PJc" id="Qbg-jo-BTY"/>
                         <outlet property="cameraButton" destination="cgx-ZF-AbM" id="jJ9-Vj-b4h"/>
                         <outlet property="cancelButton" destination="bjZ-0S-YyD" id="2xE-V8-peh"/>
                         <outlet property="memeContainerView" destination="qN7-j2-8MJ" id="1VL-aW-Uia"/>

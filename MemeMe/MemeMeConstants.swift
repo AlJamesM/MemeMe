@@ -26,3 +26,7 @@ let kMemeTextFieldBottomTag             = 2
 // Animation time for moving textField up with the keyboard
 let kAnimationTime                      = 0.3
 let kAnimationTimeFast                  = 0.1
+
+// Pinch maximum factor
+let kScaleFactor : CGFloat              = 3.0
+let kScaleBackFactor : CGFloat          = 0.9
