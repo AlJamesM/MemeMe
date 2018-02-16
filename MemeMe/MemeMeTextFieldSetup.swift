@@ -9,31 +9,15 @@
 import UIKit
 
 extension MemeMeViewController {
-
-    func setupTextFields() {
+    
+    func setupTextField( textField: UITextField, withText text: String ) {
         
-        // Text attributes dictionary (setup textField attributes)
-        // Reference - developer.apple.com/documentation/foundation/nsattributedstringkey
-        
-        let memeTextAttributes:[ String : Any ] = [
-            NSAttributedStringKey.foregroundColor.rawValue : kMemeTextColor,
-            NSAttributedStringKey.font.rawValue            : kMemeTextFont,
-            NSAttributedStringKey.strokeColor.rawValue     : kMemeTextStrokeColor,
-            NSAttributedStringKey.strokeWidth.rawValue     : kMemeTextBorderWidth
-        ]
-        
-        // Set textField default text attributes
-        textFieldTop.defaultTextAttributes    = memeTextAttributes
-        textFieldBottom.defaultTextAttributes = memeTextAttributes
+        // Text attributes
+        textField.defaultTextAttributes = memeTextAttributes
         
         // Text field setup
-        
-        textFieldTop.text             = kMemeTextDefaultTop
-        textFieldTop.textAlignment    = .center
-        textFieldTop.delegate         = self
-        
-        textFieldBottom.text          = kMemeTextDefaultBottom
-        textFieldBottom.textAlignment = .center
-        textFieldBottom.delegate      = self
+        textField.text = text
+        textField.textAlignment = .center
+        textField.delegate = self
     }
 }
