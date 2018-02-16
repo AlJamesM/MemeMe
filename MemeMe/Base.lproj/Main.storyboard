@@ -18,15 +18,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qN7-j2-8MJ">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KZU-cR-R6o">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </imageView>
-                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BTm-ao-ash">
-                                        <rect key="frame" x="8" y="52" width="359" height="60"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BTm-ao-ash">
+                                        <rect key="frame" x="8" y="8" width="359" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="Rpu-du-OtT"/>
                                         </constraints>
@@ -34,8 +34,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                     </textField>
-                                    <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cTq-No-Yly">
-                                        <rect key="frame" x="8" y="535" width="359" height="60"/>
+                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cTq-No-Yly">
+                                        <rect key="frame" x="8" y="491" width="359" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="F2w-56-buZ"/>
                                         </constraints>
@@ -46,9 +46,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="BTm-ao-ash" firstAttribute="top" secondItem="qN7-j2-8MJ" secondAttribute="top" constant="52" id="4BH-xg-UoI"/>
+                                    <constraint firstItem="BTm-ao-ash" firstAttribute="top" secondItem="qN7-j2-8MJ" secondAttribute="top" constant="8" id="4BH-xg-UoI"/>
                                     <constraint firstItem="BTm-ao-ash" firstAttribute="leading" secondItem="qN7-j2-8MJ" secondAttribute="leading" constant="8" id="B7g-zF-T5V"/>
-                                    <constraint firstAttribute="bottom" secondItem="cTq-No-Yly" secondAttribute="bottom" constant="52" id="J6N-DP-gQG"/>
+                                    <constraint firstAttribute="bottom" secondItem="cTq-No-Yly" secondAttribute="bottom" constant="8" id="J6N-DP-gQG"/>
                                     <constraint firstAttribute="trailing" secondItem="BTm-ao-ash" secondAttribute="trailing" constant="8" id="Lsh-Rc-3Fz"/>
                                     <constraint firstItem="cTq-No-Yly" firstAttribute="leading" secondItem="qN7-j2-8MJ" secondAttribute="leading" constant="8" id="Sbk-nm-tXz"/>
                                     <constraint firstAttribute="trailing" secondItem="cTq-No-Yly" secondAttribute="trailing" constant="8" id="gmu-N3-N6M"/>
@@ -98,15 +98,15 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hLu-c7-Azn" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="7ps-q1-9cz"/>
+                            <constraint firstItem="qN7-j2-8MJ" firstAttribute="top" secondItem="hLu-c7-Azn" secondAttribute="bottom" id="F7B-KC-3yA"/>
                             <constraint firstItem="qN7-j2-8MJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LjH-SZ-aLy"/>
                             <constraint firstItem="kNb-Z3-7xI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Rab-9I-Uki"/>
                             <constraint firstItem="hLu-c7-Azn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YmJ-eU-YPN"/>
-                            <constraint firstItem="qN7-j2-8MJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="bul-4w-MYd"/>
+                            <constraint firstItem="kNb-Z3-7xI" firstAttribute="top" secondItem="qN7-j2-8MJ" secondAttribute="bottom" id="c6Z-9Y-42U"/>
                             <constraint firstItem="kNb-Z3-7xI" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dpk-yw-gOs"/>
                             <constraint firstItem="kNb-Z3-7xI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="dxy-3t-q5V"/>
                             <constraint firstItem="hLu-c7-Azn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fvF-sy-Hf4"/>
                             <constraint firstItem="qN7-j2-8MJ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="oBM-o0-yRj"/>
-                            <constraint firstItem="qN7-j2-8MJ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="u7K-vH-szJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -115,8 +115,8 @@
                         <outlet property="cameraButton" destination="cgx-ZF-AbM" id="jJ9-Vj-b4h"/>
                         <outlet property="cancelButton" destination="bjZ-0S-YyD" id="2xE-V8-peh"/>
                         <outlet property="memeContainerView" destination="qN7-j2-8MJ" id="1VL-aW-Uia"/>
-                        <outlet property="memeContainerViewBottomConstraint" destination="u7K-vH-szJ" id="TXI-jH-iFd"/>
-                        <outlet property="memeContainerViewTopConstraint" destination="bul-4w-MYd" id="Zjf-hX-fL2"/>
+                        <outlet property="memeContainerViewBottomConstraint" destination="c6Z-9Y-42U" id="aGU-SY-LXj"/>
+                        <outlet property="memeContainerViewTopConstraint" destination="F7B-KC-3yA" id="jz5-J0-Qtv"/>
                         <outlet property="memeImageView" destination="KZU-cR-R6o" id="hPN-yb-0hf"/>
                         <outlet property="textFieldBottom" destination="cTq-No-Yly" id="fzd-hz-N5K"/>
                         <outlet property="textFieldTop" destination="BTm-ao-ash" id="kuV-pp-bUE"/>

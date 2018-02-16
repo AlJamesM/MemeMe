@@ -17,7 +17,6 @@
 		0D2641802016EB1400184D2E /* MemeMeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D26417F2016EB1400184D2E /* MemeMeConstants.swift */; };
 		0D2641822016F20D00184D2E /* MemeMeImageViewGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2641812016F20D00184D2E /* MemeMeImageViewGestureRecognizer.swift */; };
 		0D2641842017050700184D2E /* MemeMeTextFieldSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2641832017050700184D2E /* MemeMeTextFieldSetup.swift */; };
-		0D2641862017BE8200184D2E /* MemeMeStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2641852017BE8200184D2E /* MemeMeStruct.swift */; };
 		0D2641882018FE2F00184D2E /* MemeMeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2641872018FE2F00184D2E /* MemeMeModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +33,6 @@
 		0D26417F2016EB1400184D2E /* MemeMeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMeConstants.swift; sourceTree = "<group>"; };
 		0D2641812016F20D00184D2E /* MemeMeImageViewGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMeImageViewGestureRecognizer.swift; sourceTree = "<group>"; };
 		0D2641832017050700184D2E /* MemeMeTextFieldSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMeTextFieldSetup.swift; sourceTree = "<group>"; };
-		0D2641852017BE8200184D2E /* MemeMeStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMeStruct.swift; sourceTree = "<group>"; };
 		0D2641872018FE2F00184D2E /* MemeMeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,7 +68,6 @@
 			children = (
 				0D2641672016DB6100184D2E /* AppDelegate.swift */,
 				0D26417F2016EB1400184D2E /* MemeMeConstants.swift */,
-				0D2641852017BE8200184D2E /* MemeMeStruct.swift */,
 				0D2641872018FE2F00184D2E /* MemeMeModel.swift */,
 				0D2641692016DB6100184D2E /* MemeMeViewController.swift */,
 				0D2641832017050700184D2E /* MemeMeTextFieldSetup.swift */,
@@ -157,7 +154,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D2641862017BE8200184D2E /* MemeMeStruct.swift in Sources */,
 				0D2641822016F20D00184D2E /* MemeMeImageViewGestureRecognizer.swift in Sources */,
 				0D2641882018FE2F00184D2E /* MemeMeModel.swift in Sources */,
 				0D2641842017050700184D2E /* MemeMeTextFieldSetup.swift in Sources */,
