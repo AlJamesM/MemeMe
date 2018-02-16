@@ -13,7 +13,7 @@ extension MemeMeViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-    
+            
             // setup imageView and frame size based on the original image aspect ratio
             
             let imageWidth  : CGFloat = image.size.width
@@ -30,11 +30,11 @@ extension MemeMeViewController: UIImagePickerControllerDelegate, UINavigationCon
             cancelButton.isEnabled = true
             actionButton.isEnabled = true
             memeImageView.isUserInteractionEnabled = true
-        
+            
         }
         
         dismiss(animated: true, completion: nil)
-    
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

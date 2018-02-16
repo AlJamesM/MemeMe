@@ -14,14 +14,22 @@ let kMemeTextFont                       = UIFont(name: "HelveticaNeue-CondensedB
 let kMemeTextStrokeColor                = UIColor.black
 let kMemeTextBorderWidth                = -1.0
 
-// Text Field Default String Content
-let kMemeTextDefaultTop                 = "TOP"
-let kMemeTextDefaultBottom              = "BOTTOM"
-let kEmptyString                        = ""
+// Text attributes dictionary (setup textField attributes)
+// Reference - developer.apple.com/documentation/foundation/nsattributedstringkey
 
-// Text Field Tags (must match with storyboard textField tags)
-let kMemeTextFieldTopTag                = 1
-let kMemeTextFieldBottomTag             = 2
+let memeTextAttributes:[ String : Any ] = [
+    NSAttributedStringKey.foregroundColor.rawValue : kMemeTextColor,
+    NSAttributedStringKey.font.rawValue            : kMemeTextFont,
+    NSAttributedStringKey.strokeColor.rawValue     : kMemeTextStrokeColor,
+    NSAttributedStringKey.strokeWidth.rawValue     : kMemeTextBorderWidth
+]
+
+// Text Field Default String Content
+let kMemeTextTop = 0
+let kMemeTextBottom = 1
+let kMemeTextDefault = ["TOP", "BOTTOM"]
+
+let kEmptyString                        = ""
 
 // Animation time for moving textField up with the keyboard
 let kAnimationTime                      = 0.3

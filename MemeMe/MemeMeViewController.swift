@@ -10,11 +10,9 @@ import UIKit
 
 class MemeMeViewController: UIViewController {
     
-    // Tracks if bottom text field is selected
-    var isBottomTextFieldActive : Bool = false
-
-    // Struct that tracks status of textField is were already touched
-    var fieldFirstSelected = TextFieldFirstSelected()
+    // Tracks status of textField is were already touched
+    var textFieldFirstSelected = [ true, true ]
+    
     var imageAspectRatio = CGFloat()
     
     // MARK: - Outlets
@@ -36,77 +34,67 @@ class MemeMeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Setup textField attributes
-        setupTextFields()
         
-        // for closing the keyboard
-        let tapViewGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapBackgroundView))
-        self.memeContainerView.addGestureRecognizer(tapViewGestureRecognizer)
+        setupTextField(textField: textFieldTop, withText: kMemeTextDefault[kMemeTextTop])
+        setupTextField(textField: textFieldBottom, withText: kMemeTextDefault[kMemeTextBottom])
         
-        // gesture recognizers for pinch and pan
-        let panImageGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panHandler(_:)))
-        panImageGestureRecognizer.maximumNumberOfTouches = 1
-        panImageGestureRecognizer.delegate = self
-        memeImageView.addGestureRecognizer(panImageGestureRecognizer)
-        
-        let pinchImageGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchHandler(_:)))
-        pinchImageGestureRecognizer.delegate = self
-        memeImageView.addGestureRecognizer(pinchImageGestureRecognizer)
-        
-        // Initially disable the following
-        cancelButton.isEnabled = false
-        actionButton.isEnabled = false
-        memeImageView.isUserInteractionEnabled = false
+        setupTapGestureRecognizer()       // Setup keyboard hide Tap GR
+        setupImageGestureRecognizers()    // Setup image Pan and Pinch GR
+        setupInitialButtonsAvailability() // Disable buttons
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // enable or disable camera button
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            cameraButton.isEnabled = true
-        } else {
-            cameraButton.isEnabled = false
-        }
-        
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         subscribeToNotifications()
-    
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         unsubscribeFromNotifications()
+    }
     
+    func setupTapGestureRecognizer() {
+        
+        // for closing the keyboard
+        let tapViewGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapBackgroundView))
+        self.memeContainerView.addGestureRecognizer(tapViewGestureRecognizer)
+        
+    }
+    
+    func setupInitialButtonsAvailability() {
+        
+        // Initially disable the following
+        cancelButton.isEnabled                 = false
+        actionButton.isEnabled                 = false
+        memeImageView.isUserInteractionEnabled = false
     }
     
     // MARK: - Notifications
     func subscribeToNotifications() {
-    
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(orientationChanged(_:)), name: .UIDeviceOrientationDidChange, object: nil)
-    
     }
     
     func unsubscribeFromNotifications() {
         
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIDeviceOrientationDidChange, object: nil)
-    
+        NotificationCenter.default.removeObserver(self)
     }
     
-    // MARK: - Handle Orientation Change
-    @objc func orientationChanged(_ notification:Notification)  {
-        
-        if UIDeviceOrientationIsLandscape(UIDevice.current.orientation) || UIDeviceOrientationIsPortrait(UIDevice.current.orientation) {
-            let newFrame = imageViewRect(aspect: imageAspectRatio)
+    // Handle size adjustments after device rotation
+    // Chose not to use constraints to be able to create my custom behavior
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: nil, completion: {
+            _ in
+            let newFrame = self.imageViewRect(aspect: self.imageAspectRatio)
             UIView.animate(withDuration: kAnimationTimeFast, animations: {
                 self.memeImageView.frame = newFrame
             })
-        }
+        })
     }
     
     // MARK: - Keyboard Show and Hide Functions
@@ -120,15 +108,14 @@ class MemeMeViewController: UIViewController {
     @objc func tapBackgroundView() {
         
         hideKeyboard()
-        
     }
     
     @objc func keyboardWillShow(_ notification:Notification) {
         
-        if isBottomTextFieldActive {
+        if textFieldBottom.isFirstResponder {
             
-            memeContainerViewBottomConstraint.constant =  -getKeyboardHeight(notification) + toolBar.frame.size.height
-            memeContainerViewTopConstraint.constant    =  -getKeyboardHeight(notification) + toolBar.frame.size.height
+            memeContainerViewBottomConstraint.constant =   (getKeyboardHeight(notification) - toolBar.frame.size.height)
+            memeContainerViewTopConstraint.constant    =  -(getKeyboardHeight(notification) - toolBar.frame.size.height)
             
             UIView.animate(withDuration: kAnimationTime) {
                 self.view.layoutIfNeeded()
@@ -138,7 +125,7 @@ class MemeMeViewController: UIViewController {
     
     @objc func keyboardWillHide(_ notification:Notification) {
         
-        if isBottomTextFieldActive {
+        if textFieldBottom.isFirstResponder  {
             
             memeContainerViewBottomConstraint.constant = 0
             memeContainerViewTopConstraint.constant    = 0
@@ -159,22 +146,25 @@ class MemeMeViewController: UIViewController {
     
     // MARK: - Button Pressed Actions
     
-    // open album
-    @IBAction func albumButtonPressed(_ sender: UIBarButtonItem) {
+    func presentImagePickerWith( sourceType: UIImagePickerControllerSourceType ) {
         
         let imagePicker        = UIImagePickerController()
         imagePicker.delegate   = self
-        imagePicker.sourceType = .photoLibrary
+        imagePicker.sourceType = sourceType
         self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    
+    // open album
+    @IBAction func albumButtonPressed(_ sender: UIBarButtonItem) {
+        
+        presentImagePickerWith(sourceType: .photoLibrary)
     }
     
     // open camera
     @IBAction func photoButtonPressed(_ sender: UIBarButtonItem) {
-    
-        let imagePicker        = UIImagePickerController()
-        imagePicker.delegate   = self
-        imagePicker.sourceType = .camera
-        self.present(imagePicker, animated: true, completion: nil)
+        
+        presentImagePickerWith(sourceType: .camera)
     }
     
     // open sharing
@@ -184,20 +174,18 @@ class MemeMeViewController: UIViewController {
         let controller = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         
         controller.completionWithItemsHandler = {(type, completed, items, error) in
-        
+            
             if completed {
-            
+                
                 self.save( memedImage: memedImage )
-            
+                
             } else {
-            
+                
                 print("share cancelled")
-            
             }
         }
         
         self.present(controller, animated: true, completion: nil)
-        
     }
     
     func generateMemedImage() -> UIImage {
@@ -212,13 +200,13 @@ class MemeMeViewController: UIViewController {
     
     // reset imageview to default settings
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-    
+        
         // reset textField to virgin status and default content
-        fieldFirstSelected.top    = true
-        fieldFirstSelected.bottom = true
-        textFieldTop.text         = kMemeTextDefaultTop
-        textFieldBottom.text      = kMemeTextDefaultBottom
-
+        textFieldTop.text         = kMemeTextDefault[kMemeTextTop]
+        textFieldBottom.text      = kMemeTextDefault[kMemeTextBottom]
+        
+        textFieldFirstSelected    = [ true, true ]
+        
         memeImageView.image       = nil                      // remove image
         memeImageView.frame       = memeContainerView.bounds // reset imageView frame
         
@@ -230,10 +218,9 @@ class MemeMeViewController: UIViewController {
     // MARK: - Misc
     // Save the Meme
     func save( memedImage : UIImage? ) {
-    
+        
         let meme = Meme(topText: textFieldTop.text!, bottomText: textFieldBottom.text!, originalImage: memeImageView.image!, memedImage: memedImage )
         print("Image Saved - Top Text: \(meme.topText!) Bottom Text: \(meme.bottomText!)")
-    
     }
     
     // status bar setup
@@ -248,7 +235,6 @@ class MemeMeViewController: UIViewController {
         let imageNewWidth  : CGFloat = memeContainerView.bounds.width
         
         return CGRect.init(x: memeContainerView.bounds.width/2 - imageNewWidth/2, y:  memeContainerView.bounds.height/2 - imageNewHeight/2, width: imageNewWidth, height: imageNewHeight)
-        
     }
 }
 
